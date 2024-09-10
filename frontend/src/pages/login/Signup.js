@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import './login.css';
 
 const Signup = () => {
     const [username, setUsername] = useState('');
@@ -8,6 +10,7 @@ const Signup = () => {
     const [profilePhoto, setProfilePhoto] = useState(null);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleSignup = async (e) => {
         e.preventDefault();
@@ -25,8 +28,10 @@ const Signup = () => {
             setSuccess('Signup successful! Please login.');
             console.log(user)
     };
-    
-    
+
+    const handleNavigate = async (e) => {
+        navigate('/');
+    }
 
     return (
         <div className="signup-container">
@@ -67,6 +72,9 @@ const Signup = () => {
                     />
                 </div> */}
                 <button type="submit">Sign Up</button>
+                <div className='signup-btn-container'>
+                <button type='button' onClick={handleNavigate} className='signup-btn'>Login</button>
+                </div>
             </form>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}

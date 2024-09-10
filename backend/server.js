@@ -27,16 +27,25 @@ async function run() {
 
     app.get('/user', async (req, res) => {
       const users = await userCollection.find().toArray();
-      console.log(users);
+      // console.log(users);
       res.send(users);
     });
 
+    app.get('/currentUser/:email'), async (req, res) => {
+      const email = req.params.user.email;
+      const user = await userCollection.find({ email: email }).toArray();
+      // console.log(user);
+      console.log(req.body)
+      console.log(email)
+      res.send(user)
+    }
+
     app.post('/register', async (req, res) => {
       const user = req.body;
-      console.log(user);
+      // console.log(user);
       const result = await userCollection.insertOne(user);
       res.send(result);
-      console.log(result)
+      // console.log(result);
     })
 } catch (error) {
   console.error("Error connecting to MongoDB:", error);
