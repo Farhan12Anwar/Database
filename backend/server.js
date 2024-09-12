@@ -31,14 +31,19 @@ async function run() {
       res.send(users);
     });
 
-    app.get('/currentUser/:email'), async (req, res) => {
-      const email = req.params.user.email;
-      const user = await userCollection.find({ email: email }).toArray();
-      // console.log(user);
-      console.log(req.body)
-      console.log(email)
-      res.send(user)
-    }
+    app.get('/currentUser/:email', async (req, res) => {
+      const email = req.params.email;
+      console.log("Fetching user by email:", email);
+      
+      try {
+        const user = await userCollection.findOne({ email: email });
+        res.send(user);  
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        res.status(500).send({ error: "An error occurred while fetching the user." });
+      }
+    });
+    
 
     app.post('/register', async (req, res) => {
       const user = req.body;

@@ -1,15 +1,23 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
-// Create a context for the user data
 export const UserContext = createContext();
 
-// Create a provider component
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState({
-        email: '',
+        email: 'test@example.com', 
         username: ''
     });
-    console.log('UserProvider')
+
+    useEffect(() => {
+        if (user.email) {
+            fetch(`http://localhost:5000/currentUser/${user.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setUser(prev => ({ ...prev, ...data }));
+            })
+            .catch(err => console.error("Error fetching user data:", err));
+        }
+    }, [user.email]);
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
@@ -17,3 +25,5 @@ export const UserProvider = ({ children }) => {
         </UserContext.Provider>
     );
 };
+
+export default UserProvider;

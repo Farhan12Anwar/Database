@@ -64,13 +64,13 @@ const Signup = () => {
                         required
                     />
                 </div>
-                {/* <div className="form-group">
+                <div className="form-group">
                     <label>Profile Photo:</label>
                     <input
                         type="file"
                         onChange={(e) => setProfilePhoto(e.target.files[0])}
                     />
-                </div> */}
+                </div>
                 <button type="submit">Sign Up</button>
                 <div className='signup-btn-container'>
                 <button type='button' onClick={handleNavigate} className='signup-btn'>Login</button>
